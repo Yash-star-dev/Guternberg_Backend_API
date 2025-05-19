@@ -172,10 +172,7 @@ class BookListView(generics.ListAPIView):
             title = self.request.query_params.get("title")
             if title:
                 qs = qs.filter(title__icontains=title)
-            
 
-            if response.data["count"] == 0:
-                response.data["message"] = "No books found matching the given filters."
             # return response
             return qs.distinct()
 
@@ -184,3 +181,10 @@ class BookListView(generics.ListAPIView):
             raise ValidationError(
                 {"detail": f"An error occurred while filtering books: {str(e)}"}
             )
+
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        # response.data has pagination info, including "count"
+        if response.data.get("count", 0) == 0:
+            response.data["message"] = "Book not found"
+        return response
