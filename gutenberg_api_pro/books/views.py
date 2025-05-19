@@ -172,11 +172,7 @@ class BookListView(generics.ListAPIView):
             title = self.request.query_params.get("title")
             if title:
                 qs = qs.filter(title__icontains=title)
-            
 
-            if response.data["count"] == 0:
-                response.data["message"] = "No books found matching the given filters."
-            # return response
             return qs.distinct()
 
         except Exception as e:
