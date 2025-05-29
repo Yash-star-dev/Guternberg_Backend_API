@@ -1,0 +1,10 @@
+# Virtual environments
+env
+.env
+__pycache__
+
+# Pre-commit config
+.pre-commit-config
+
+# Flake8 config (optional – if you don’t want to track it)
+.flake8
